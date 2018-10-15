@@ -1,0 +1,3 @@
+﻿  main.cpp
+e:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(291): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  GD1M02Project.vcxproj -> E:\UNI\Source\Matrix Tool\GD1M02Project\GD1M02Project\x64\Debug\GD1M02Project.exe
