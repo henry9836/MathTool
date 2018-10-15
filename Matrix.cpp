@@ -67,6 +67,19 @@ void CMatrixCalculator::Multiplication_BA(double &_Sq1, double &_Sq2, double &_S
 	_Sq16 = (b41 * a14 + b42 * a24 + b43 * a34 + b44 * a44);
 }
 
+float CMatrixCalculator::MultiplyMatrix(float a11, float a12, float a13, float a14, float a21, float a22, float a23, float a24, float a31, float a32, float a33, float a34, float a41, float a42, float a43, float a44, float b11, float b12, float b13, float b14, float b21, float b22, float b23, float b24, float b31, float b32, float b33, float b34, float b41, float b42, float b43, float b44, float result[4][4])
+{
+	float ResultMatrix[4][4] = {
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+	};
+
+
+	return 0.0f;
+}
+
 float CMatrixCalculator::Det(float a11, float a12, float a13, float a14, float a21, float a22, float a23, float a24, float a31, float a32, float a33, float a34, float a41, float a42, float a43, float a44) {
 	float result;
 	

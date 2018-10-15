@@ -300,6 +300,14 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			break;
 		}
 
+		case IDOK2: {
+
+			//ResultMatrix = CMatrixCalculator::MultiplyMatrix(a11,  a12,  a13,  a14,  a21,  a22,  a23,  a24,  a31,  a32,  a33,  a34,  a41,  a42,  a43,  a44,  b11,  b12,  b13,  b14,  b21,  b22,  b23,  b24,  b31,  b32,  b33,  b34,  b41,  b42,  b43,  b44, ResultMatrix);
+
+
+			break;
+		}
+
 		default:
 			break;
 		}
@@ -308,7 +316,6 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 	}
 	case WM_CLOSE:
 	{
-		MessageBox(_hwnd, ToWideString(_value).c_str(), L"Value in A11", MB_OK);
 		ShowWindow(_hwnd, SW_HIDE);
 		return TRUE;
 		break;
