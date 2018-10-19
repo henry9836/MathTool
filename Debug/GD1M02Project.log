@@ -1,0 +1,23 @@
+﻿  Matrix.cpp
+  main.cpp
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(255): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(260): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(265): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(270): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(275): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(280): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(285): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(290): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(295): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(300): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(305): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(310): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(315): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(320): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(325): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(330): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(431): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(506): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\winbox-laptop\desktop\matrix tool\gd1m02project\gd1m02project\gd1m02project\main.cpp(620): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  GD1M02Project.vcxproj -> C:\Users\Winbox-Laptop\Desktop\Matrix Tool\GD1M02Project\GD1M02Project\Debug\GD1M02Project.exe
