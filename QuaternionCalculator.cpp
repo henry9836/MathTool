@@ -97,14 +97,14 @@ void QuaternionCalculator::Conjugate_B()
 float QuaternionCalculator::AbsValue_A()
 {
 	float AbsValue;
-	AbsValue = sqrt(pow(this->a1, 2) + pow(this->b1, 2) + pow(this->c1, 2) + pow(this->r1, 2));
+	AbsValue = sqrt(pow(this->a1, 2) + pow(this->b1, 2) + pow(this->c1, 2) + pow(this->d1, 2));
 	return AbsValue;
 }
 
 float QuaternionCalculator::AbsValue_B()
 {
 	float AbsValue;
-	AbsValue = sqrt(pow(this->a2, 2) + pow(this->b2, 2) + pow(this->c2, 2) + pow(this->r2, 2));
+	AbsValue = sqrt(pow(this->a2, 2) + pow(this->b2, 2) + pow(this->c2, 2) + pow(this->d2, 2));
 	return AbsValue;
 }
 
