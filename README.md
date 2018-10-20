@@ -7,7 +7,18 @@
 ##### Features:
 
 - Matrices
-  - Multiplication
   - Addition
   - Subtraction
+  - Multiplication
   - Determinate
+  - Inverse
+  
+- Quaternion
+  - Addition
+  - Multiplication
+  - Subtraction
+  - Determinate
+  - Inverse
+  - T
+  - dot
+  - a* b*
