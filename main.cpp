@@ -22,8 +22,12 @@
 #include <iostream>
 #include "utils.h"
 #include "resource.h"
+#include "QuaternionCalculator.h"
 #include "Matrix.h"
 
+float tmp[16];
+float tmp2[16];
+float tmp3[16];
 float ResultMatrix[4][4] = {
 	{ 0, 0, 0, 0 },
 	{ 0, 0, 0, 0 },
@@ -45,13 +49,113 @@ float MatrixB[4][4] = {
 	{ 0, 0, 0, 0 },
 };
 
-float a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44;
-float r11, r12, r13, r14, r21, r22, r23, r24, r31, r32, r33, r34, r41, r42, r43, r44;
-double b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44;
+/* MATRICES */
+float a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44, r11, r12, r13, r14, r21, r22, r23, r24, r31, r32, r33, r34, r41, r42, r43, r44, b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44;
+
+/* Quaternions */
+
+float a1, a2, a3, a4, b1, b2, b3, b4, tvalue, r1, r2, r3, r4;
+
 
 HMENU g_hMenu;
 HWND g_hDlgMatrix, g_hDlgTransformation, g_hDlgGaussian, g_hDlgQuaternion, g_hDlgSLERP;
+QuaternionCalculator *objQC = new QuaternionCalculator();
 int MatrixC = 0;
+
+int prep() {
+
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp[i] = MatrixA[0][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp[i + 4] = MatrixA[1][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp[i + 8] = MatrixA[2][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp[i + 12] = MatrixA[3][i];
+		}
+	}
+
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp2[i] = MatrixB[0][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp2[i + 4] = MatrixB[1][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp2[i + 8] = MatrixB[2][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp2[i + 12] = MatrixB[3][i];
+		}
+	}
+
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp3[i] = ResultMatrix[0][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp3[i + 4] = ResultMatrix[1][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp3[i + 8] = ResultMatrix[2][i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			tmp3[i + 12] = ResultMatrix[3][i];
+		}
+	}
+	return 0;
+
+}
+
+int reassmble(float ptr[]) {
+	//resemble
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			ResultMatrix[0][i] = ptr[i];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			ResultMatrix[0][i] = ptr[i + 4];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			ResultMatrix[0][i] = ptr[i + 8];
+		}
+	}
+	for (int i = 0; i < 4; i++) { //Prep to send to function
+		if (i <= 4) {
+			ResultMatrix[0][i] = ptr[i + 12];
+		}
+	}
+
+	return 0;
+}
+
 
 void GameLoop()
 {
@@ -419,7 +523,7 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 
 		case IDOK3: {
 			float m_MA;
-			
+
 			m_MA = CMatrixCalculator::Det(a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44);
 			WriteToEditBox(_hwnd, IDC_EDIT_DetA, m_MA);
 			break;
@@ -435,98 +539,40 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 
 		case IDOK2: {
 
-			float tmp[16];
-			float tmp2[16];
-			float tmp3[16];
-			
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp[i] = MatrixA[0][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp[i + 4] = MatrixA[1][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp[i + 8] = MatrixA[2][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp[i + 12] = MatrixA[3][i];
-				}
-			}
+			prep();
 
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp2[i] = MatrixB[0][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp2[i + 4] = MatrixB[1][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp2[i + 8] = MatrixB[2][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp2[i + 12] = MatrixB[3][i];
-				}
-			}
+			float* ptr = CMatrixCalculator::MultiplyMatrix(a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44, b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44, tmp, tmp2, tmp3, true);
 
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp3[i] = ResultMatrix[0][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp3[i + 4] = ResultMatrix[1][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp3[i + 8] = ResultMatrix[2][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp3[i + 12] = ResultMatrix[3][i];
-				}
-			}
+			reassmble(ptr);
 
+			WriteToEditBox(_hwnd, IDC_EDIT_R11, ptr[0]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R12, ptr[1]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R13, ptr[2]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R14, ptr[3]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R21, ptr[4]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R22, ptr[5]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R23, ptr[6]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R24, ptr[7]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R31, ptr[8]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R32, ptr[9]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R33, ptr[10]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R34, ptr[11]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R41, ptr[12]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R42, ptr[13]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R43, ptr[14]);
+			WriteToEditBox(_hwnd, IDC_EDIT_R44, ptr[15]);
 
-			float* ptr = CMatrixCalculator::MultiplyMatrix(a11,  a12,  a13,  a14,  a21,  a22,  a23,  a24,  a31,  a32,  a33,  a34,  a41,  a42,  a43,  a44,  b11,  b12,  b13,  b14,  b21,  b22,  b23,  b24,  b31,  b32,  b33,  b34,  b41,  b42,  b43,  b44, tmp, tmp2, tmp3);
-			
-			//resemble
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					ResultMatrix[0][i] = ptr[i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					ResultMatrix[0][i] = ptr[i + 4];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					ResultMatrix[0][i] = ptr[i + 8];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					ResultMatrix[0][i] = ptr[i + 12];
-				}
-			}
-			
+			break;
+		}
+
+		case IDOK5: {
+
+			prep();
+
+			float* ptr = CMatrixCalculator::MultiplyMatrix(a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44, b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44, tmp, tmp2, tmp3, false);
+
+			reassmble(ptr);
+
 			WriteToEditBox(_hwnd, IDC_EDIT_R11, ptr[0]);
 			WriteToEditBox(_hwnd, IDC_EDIT_R12, ptr[1]);
 			WriteToEditBox(_hwnd, IDC_EDIT_R13, ptr[2]);
@@ -733,5 +779,4 @@ int WINAPI WinMain(HINSTANCE _hInstance,
 	// Return to Windows like this...
 	return (static_cast<int>(msg.wParam));
 }
-
 
