@@ -640,6 +640,72 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 
 	switch (_msg)
 	{
+	case WM_COMMAND: {
+		switch (LOWORD(_wparam))
+		{
+		case IDC_EDIT1:
+			break;
+		case IDC_EDIT2:
+			break;
+		case IDC_EDIT3:
+			break;
+		case IDC_EDIT4:
+			break;
+		case IDC_EDIT5:
+			break;
+		case IDC_EDIT6:
+			break;
+		case IDC_EDIT7:
+			break;
+		case IDC_EDIT8:
+			break;
+		case IDC_EDIT9:
+			break;
+		case IDC_EDIT10:
+			break;
+		case IDC_EDIT11:
+			break;
+		case IDC_EDIT12:
+			break;
+		case IDC_EDIT13:
+			break;
+		case IDC_BUTTON1:
+			break;
+		case IDC_BUTTON2:
+			break;
+		case IDC_BUTTON3:
+			break;
+		case IDC_BUTTON4:
+			break;
+		case IDC_BUTTON5:
+			break;
+		case IDC_BUTTON6:
+			break;
+		case IDC_BUTTON7:
+			break;
+		case IDC_BUTTON8:
+			break;
+		case IDC_BUTTON9:
+			break;
+		case IDC_BUTTON10:
+			break;
+		case IDC_BUTTON11:
+			break;
+		case IDC_BUTTON12:
+			break;
+		case IDC_BUTTON13:
+			break;
+		case IDC_BUTTON14:
+			break;
+		case IDC_BUTTON15:
+			break;
+
+
+		default:
+			break;
+		}
+	}
+
 	case WM_CLOSE:
 	{
 		ShowWindow(_hwnd, SW_HIDE);
