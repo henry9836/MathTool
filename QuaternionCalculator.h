@@ -3,28 +3,30 @@
 
 class QuaternionCalculator {
 private:
-	float a1, b1, c1, r1;
-	float a2, b2, c2, r2;
-	float Sq_T;
+	float a1 = 0, b1 = 0, c1 = 0, d1 = 0;
+	float a2 = 0, b2 = 0, c2 = 0, d2 = 0;
+	float r1 = 0, r2 = 0, r3 = 0, r4 = 0;
+	float Sq_T = 0;
 
 public:
 	QuaternionCalculator();
 	~QuaternionCalculator();
 	void SetA(float _i, float _j, float _k, float _r);
 	void SetB(float _i, float _j, float _k, float _r);
-	void SetT(float _Sq_MpBy, float _ADotB, float _AbsVal_A, float _AbsVal_B);
-	void Addition_AB(float &i, float &j, float &k, float &r);
-	void Subtraction_AB(float &i, float &j, float &k, float &r);
-	void Subtraction_BA(float &i, float &j, float &k, float &r);
-	void Multiplication_BA(float &i, float &j, float &k, float &r);
-	void Multiplication_AB(float &i, float &j, float &k, float &r);
-	float A_Dot_B(float a1, float b1, float c1, float r1, float a2, float b2, float c2, float r2);
-	void Conjugate_A(float &i, float &j, float &k, float &r);
-	void Conjugate_B(float &i, float &j, float &k, float &r);
-	float AbsValue_A(float a1, float b1, float c1, float r1);
-	float AbsValue_B(float a2, float b2, float c2, float r2);
-	void Inverse_A(float &i, float &j, float &k, float &r);
-	void Inverse_B(float &i, float &j, float &k, float &r);
-	void Multiply_A_by(float &i, float &j, float &k, float &r);
-	void Multiply_B_by(float &i, float &j, float &k, float &r);
+	void SetT(float _Sq_MpBy);
+	void Addition_AB();
+	void Subtraction_AB();
+	void Subtraction_BA();
+	void Multiplication_BA();
+	void Multiplication_AB();
+	float A_Dot_B();
+	void Conjugate_A();
+	void Conjugate_B();
+	float AbsValue_A();
+	float AbsValue_B();
+	void Inverse_A();
+	void Inverse_B();
+	void Multiply_A_byT();
+	void Multiply_B_byT();
+	float GetResult(float result);
 };

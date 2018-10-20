@@ -1,121 +1,80 @@
 #include <math.h>
+#include <string>
+#include <iostream>
+#include <vector>
 #include "Matrix.h"
+#include <windows.h>  
+#include <windowsx.h> 
 
-CMatrixCalculator::CMatrixCalculator()
-{
-	Matrix[4][4], ResultMatrix[4][4];
+using namespace std;
+
+
+CMatrixCalculator::CMatrixCalculator() {
+
 }
 
-CMatrixCalculator::~CMatrixCalculator()
-{
+CMatrixCalculator::~CMatrixCalculator() {
 }
 
-void CMatrixCalculator::setValue(int iColumn, int iRow, float fValue)
+float* CMatrixCalculator::MultiplyMatrix(float a11, float a12, float a13, float a14, float a21, float a22, float a23, float a24, float a31, float a32, float a33, float a34, float a41, float a42, float a43, float a44, float b11, float b12, float b13, float b14, float b21, float b22, float b23, float b24, float b31, float b32, float b33, float b34, float b41, float b42, float b43, float b44, float matrixA[16], float matrixB[16], float matrixResult[16], bool AB)
 {
-	Matrix[iRow][iColumn] = fValue;
-}
+	float* ptr; //to help send array through functions
+	ptr = matrixResult;
 
+	if (AB == true) {
+		matrixResult[0] = (a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41);
+		matrixResult[1] = (a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42);
+		matrixResult[2] = (a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43);
+		matrixResult[3] = (a11 * b14 + a12 * b24 + a13 * b34 + a14 * b44);
 
-/*//Needed to get the determinant
-void getCofactor(std::array<std::array<float, 4>, 4> A, std::array<std::array<float, 4>, 4> temp, int p, int q, int n)
-{
-	int i = 0, j = 0;
+		matrixResult[4] = (a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41);
+		matrixResult[5] = (a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42);
+		matrixResult[6] = (a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43);
+		matrixResult[7] = (a21 * b14 + a22 * b24 + a23 * b34 + a24 * b44);
 
-	// Looping for each element of the matrix 
-	for (int iRow = 0; iRow < n; iRow++)
-	{
-		for (int iCol = 0; iCol < n; iCol++)
-		{
-			//  Copying into temporary matrix only those element 
-			//  which are not in given row and column 
-			if (iRow != p && iCol != q)
-			{
-				temp[i][j++] = A[iRow][iCol];
+		matrixResult[8] = (a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41);
+		matrixResult[9] = (a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42);
+		matrixResult[10] = (a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43);
+		matrixResult[11] = (a31 * b14 + a32 * b24 + a33 * b34 + a34 * b44);
 
-				// Row is filled, so increase row index and 
-				// reset col index 
-				if (j == n - 1)
-				{
-					j = 0;
-					i++;
-				}
-			}
-		}
-	}
-}
-float Determinant(std::array<std::array<float, 4>, 4> A, int n)
-{
-	float D = 0; // Initialize result 
-
-	std::array<std::array<float, 4>, 4> temp = { {
-		{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-		} }; // To store cofactors 
-
-	int sign = 1;  // To store sign multiplier 
-
-				   // Iterate for each element of first row 
-	for (int f = 0; f < n; f++)
-	{
-		// Getting Cofactor of A[0][f] 
-		getCofactor(A, temp, 0, f, n);
-		D += sign * A[0][f] * Determinant(temp, n - 1);
-
-		// terms are to be added with alternate sign 
-		sign = -sign;
+		matrixResult[12] = (a41 * b11 + a42 * b21 + a43 * b31 + a44 * b41);
+		matrixResult[13] = (a41 * b12 + a42 * b22 + a43 * b32 + a44 * b42);
+		matrixResult[14] = (a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43);
+		matrixResult[15] = (a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44);
 	}
 
-	return D;
-}
-float CMatrixCalculator::DeterminantA()
-{
-	std::array<std::array<float, 4>, 4> A = { {
-		{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-		} };
-	float D = 0; // Initialize result 
-	//To Stop it from looping on itself
-	std::copy(&Matrix[0][0], &Matrix[0][0]+4*4, &A[0][0]);
+	if (AB == false) {
+		matrixResult[0] = (b11 * a11 + b12 * a21 + b13 * a31 + b14 * a41);
+		matrixResult[1] = (b11 * a12 + b12 * a22 + b13 * a32 + b14 * a42);
+		matrixResult[2] = (b11 * a13 + b12 * a23 + b13 * a33 + b14 * a43);
+		matrixResult[3] = (b11 * a14 + b12 * a24 + b13 * a34 + b14 * a44);
 
-	std::array<std::array<float, 4>, 4> temp = { {
-		{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-		} }; // To store cofactors 
+		matrixResult[4] = (b21 * a11 + b22 * a21 + b23 * a31 + b24 * a41);
+		matrixResult[5] = (b21 * a12 + b22 * a22 + b23 * a32 + b24 * a42);
+		matrixResult[6] = (b21 * a13 + b22 * a23 + b23 * a33 + b24 * a43);
+		matrixResult[7] = (b21 * a14 + b22 * a24 + b23 * a34 + b24 * a44);
 
-	float sign = 1;  // To store sign multiplier 
+		matrixResult[8] = (b31 * a11 + b32 * a21 + b33 * a31 + b34 * a41);
+		matrixResult[9] = (b31 * a12 + b32 * a22 + b33 * a32 + b34 * a42);
+		matrixResult[10] = (b31 * a13 + b32 * a23 + b33 * a33 + b34 * a43);
+		matrixResult[11] = (b31 * a14 + b32 * a24 + b33 * a34 + b34 * a44);
 
-				   // Iterate for each element of first row 
-	for (int f = 0; f < 4; f++)
-	{
-		// Getting Cofactor of A[0][f] 
-		getCofactor(A, temp, 0, f, 4);
-		D += sign * A[0][f] * Determinant(temp, 4 - 1);
-
-		// terms are to be added with alternate sign 
-		sign = -sign;
+		matrixResult[12] = (b41 * a11 + b42 * a21 + b43 * a31 + b44 * a41);
+		matrixResult[13] = (b41 * a12 + b42 * a22 + b43 * a32 + b44 * a42);
+		matrixResult[14] = (b41 * a13 + b42 * a23 + b43 * a33 + b44 * a43);
+		matrixResult[15] = (b41 * a14 + b42 * a24 + b43 * a34 + b44 * a44);
 	}
 
-	return D;
-}*/
-void CMatrixCalculator::multiplyMatrix(float fValue)
-{
-	for (int iRow = 1; iRow < 5; iRow++)
-	{	
-		for (int iCol = 1; iCol < 5; iCol++)
-		{
-			ResultMatrix[iRow][iCol] = Matrix[iRow][iCol] * fValue;
-		}
-	}
-	return;
+	return ptr;
 }
 
-float CMatrixCalculator::getResultant(int iColumn, int iRow)
-{
-	return ResultMatrix[iColumn][iRow];
+float CMatrixCalculator::Det(float a11, float a12, float a13, float a14, float a21, float a22, float a23, float a24, float a31, float a32, float a33, float a34, float a41, float a42, float a43, float a44) {
+	float result;
+
+	result = a11 * ((a22*((a33*a44) - (a43*a34))) - (a23*((a32*a44) - (a42*a34))) + (a24*((a32*a43) - (a42*a33)))) -
+		a12 * ((a21*((a33*a44) - (a43*a34))) - (a23*((a31*a44) - (a41*a34))) + (a24*((a31*a43) - (a41*a33)))) +
+		a13 * ((a21*((a32*a44) - (a42*a34))) - (a22*((a31*a44) - (a41*a34))) + (a24*((a31*a42) - (a41*a32)))) -
+		a14 * ((a21*((a32*a43) - (a42*a33))) - (a22*((a31*a43) - (a41*a33))) + (a23*((a31*a42) - (a41*a32))));
+
+	return result;
 }
