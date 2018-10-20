@@ -193,3 +193,16 @@ float* CMatrixCalculator::Inverse(float a11, float a12, float a13, float a14, fl
 	return ptr;
 
 }
+
+float* CMatrixCalculator::Tranpose(float a11, float a12, float a13, float a14, float a21, float a22, float a23, float a24, float a31, float a32, float a33, float a34, float a41, float a42, float a43, float a44, float matrixA[16], float matrixB[16], float matrixResult[16]) {
+
+	float* ptr; //to help send array through functions
+	ptr = matrixResult;
+
+	matrixResult[0] = a11;		matrixResult[1] = a21;		matrixResult[2] = a31;		matrixResult[3] = a41;
+	matrixResult[4] = a12;		matrixResult[5] = a22;		matrixResult[6] = a32;		matrixResult[7] = a42;
+	matrixResult[8] = a13;		matrixResult[9] = a23;		matrixResult[10] = a33;		matrixResult[11] = a43;
+	matrixResult[12] = a14;		matrixResult[13] = a24;		matrixResult[14] = a34;		matrixResult[15] = a44;
+
+	return ptr;
+}

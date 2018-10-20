@@ -175,6 +175,87 @@ void updateresult(HWND _hwnd, float ptr[]) {
 	WriteToEditBox(_hwnd, IDC_EDIT_R44, ptr[15]);
 }
 
+//0 A, 1 B, 2 R
+void updatevaluesMatrix(HWND _hwnd, int type) {
+	if (type == 0) {
+		a11 = ReadFromEditBox(_hwnd, IDC_EDIT_A11);
+		a12 = ReadFromEditBox(_hwnd, IDC_EDIT_A12);
+		a13 = ReadFromEditBox(_hwnd, IDC_EDIT_A13);
+		a14 = ReadFromEditBox(_hwnd, IDC_EDIT_A14);
+		a21 = ReadFromEditBox(_hwnd, IDC_EDIT_A21);
+		a22 = ReadFromEditBox(_hwnd, IDC_EDIT_A22);
+		a23 = ReadFromEditBox(_hwnd, IDC_EDIT_A23);
+		a24 = ReadFromEditBox(_hwnd, IDC_EDIT_A24);
+		a31 = ReadFromEditBox(_hwnd, IDC_EDIT_A31);
+		a32 = ReadFromEditBox(_hwnd, IDC_EDIT_A32);
+		a33 = ReadFromEditBox(_hwnd, IDC_EDIT_A33);
+		a34 = ReadFromEditBox(_hwnd, IDC_EDIT_A34);
+		a41 = ReadFromEditBox(_hwnd, IDC_EDIT_A41);
+		a42 = ReadFromEditBox(_hwnd, IDC_EDIT_A42);
+		a43 = ReadFromEditBox(_hwnd, IDC_EDIT_A43);
+		a44 = ReadFromEditBox(_hwnd, IDC_EDIT_A44);
+
+		MatrixA[0][0] = a11;
+		MatrixA[0][1] = a12;
+		MatrixA[0][2] = a13;
+		MatrixA[0][3] = a14;
+
+		MatrixA[1][0] = a21;
+		MatrixA[1][1] = a22;
+		MatrixA[1][2] = a23;
+		MatrixA[1][3] = a24;
+
+		MatrixA[2][0] = a31;
+		MatrixA[2][1] = a32;
+		MatrixA[2][2] = a33;
+		MatrixA[2][3] = a34;
+
+		MatrixA[3][0] = a41;
+		MatrixA[3][1] = a42;
+		MatrixA[3][2] = a43;
+		MatrixA[3][3] = a44;
+	}
+	if (type == 1) {
+		b11 = ReadFromEditBox(_hwnd, IDC_EDIT_B11);
+		b12 = ReadFromEditBox(_hwnd, IDC_EDIT_B12);
+		b13 = ReadFromEditBox(_hwnd, IDC_EDIT_B13);
+		b14 = ReadFromEditBox(_hwnd, IDC_EDIT_B14);
+		b21 = ReadFromEditBox(_hwnd, IDC_EDIT_B21);
+		b22 = ReadFromEditBox(_hwnd, IDC_EDIT_B22);
+		b23 = ReadFromEditBox(_hwnd, IDC_EDIT_B23);
+		b24 = ReadFromEditBox(_hwnd, IDC_EDIT_B24);
+		b31 = ReadFromEditBox(_hwnd, IDC_EDIT_B31);
+		b32 = ReadFromEditBox(_hwnd, IDC_EDIT_B32);
+		b33 = ReadFromEditBox(_hwnd, IDC_EDIT_B33);
+		b34 = ReadFromEditBox(_hwnd, IDC_EDIT_B34);
+		b41 = ReadFromEditBox(_hwnd, IDC_EDIT_B41);
+		b42 = ReadFromEditBox(_hwnd, IDC_EDIT_B42);
+		b43 = ReadFromEditBox(_hwnd, IDC_EDIT_B43);
+		b44 = ReadFromEditBox(_hwnd, IDC_EDIT_B44);
+
+		MatrixB[0][0] = b11;
+		MatrixB[0][1] = b12;
+		MatrixB[0][2] = b13;
+		MatrixB[0][3] = b14;
+
+		MatrixB[1][0] = b21;
+		MatrixB[1][1] = b22;
+		MatrixB[1][2] = b23;
+		MatrixB[1][3] = b24;
+
+		MatrixB[2][0] = b31;
+		MatrixB[2][1] = b32;
+		MatrixB[2][2] = b33;
+		MatrixB[2][3] = b34;
+
+		MatrixB[3][0] = b41;
+		MatrixB[3][1] = b42;
+		MatrixB[3][2] = b43;
+		MatrixB[3][3] = b44;
+	}
+
+}
+
 void setQresult(HWND hwn) {
 	WriteToEditBox(hwn, IDC_EDIT10, objQC->GetResult(1));
 	WriteToEditBox(hwn, IDC_EDIT11, objQC->GetResult(2));
@@ -551,6 +632,7 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 
 			m_MA = CMatrixCalculator::Det(a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44);
 			WriteToEditBox(_hwnd, IDC_EDIT_DetA, m_MA);
+
 			break;
 		}
 
@@ -581,6 +663,8 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			WriteToEditBox(_hwnd, IDC_EDIT_A42, ptr[13]);
 			WriteToEditBox(_hwnd, IDC_EDIT_A43, ptr[14]);
 			WriteToEditBox(_hwnd, IDC_EDIT_A44, ptr[15]);
+
+			updatevaluesMatrix(_hwnd, 0);
 			
 			break;
 		}
@@ -612,6 +696,8 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			WriteToEditBox(_hwnd, IDC_EDIT_B42, ptr[13]);
 			WriteToEditBox(_hwnd, IDC_EDIT_B43, ptr[14]);
 			WriteToEditBox(_hwnd, IDC_EDIT_B44, ptr[15]);
+
+			updatevaluesMatrix(_hwnd, 1);
 
 			break;
 		}
@@ -701,6 +787,69 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			WriteToEditBox(_hwnd, IDC_EDIT_A43, ptr[14]);
 			WriteToEditBox(_hwnd, IDC_EDIT_A44, ptr[15]);
 
+			updatevaluesMatrix(_hwnd, 0);
+
+			break;
+		}
+
+		case IDOK9: {
+
+			prep();
+
+			float* ptr = CMatrixCalculator::Tranpose(a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44, tmp, tmp2, tmp3);
+
+			reassmble(ptr);
+
+			WriteToEditBox(_hwnd, IDC_EDIT_A11, ptr[0]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A12, ptr[1]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A13, ptr[2]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A14, ptr[3]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A21, ptr[4]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A22, ptr[5]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A23, ptr[6]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A24, ptr[7]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A31, ptr[8]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A32, ptr[9]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A33, ptr[10]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A34, ptr[11]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A41, ptr[12]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A42, ptr[13]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A43, ptr[14]);
+			WriteToEditBox(_hwnd, IDC_EDIT_A44, ptr[15]);
+
+			updatevaluesMatrix(_hwnd, 0);
+
+			break;
+		}
+
+
+		case IDOK11: {
+
+			prep();
+
+			float* ptr = CMatrixCalculator::Tranpose(b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44, tmp, tmp2, tmp3);
+
+			reassmble(ptr);
+
+			WriteToEditBox(_hwnd, IDC_EDIT_B11, ptr[0]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B12, ptr[1]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B13, ptr[2]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B14, ptr[3]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B21, ptr[4]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B22, ptr[5]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B23, ptr[6]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B24, ptr[7]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B31, ptr[8]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B32, ptr[9]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B33, ptr[10]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B34, ptr[11]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B41, ptr[12]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B42, ptr[13]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B43, ptr[14]);
+			WriteToEditBox(_hwnd, IDC_EDIT_B44, ptr[15]);
+
+			updatevaluesMatrix(_hwnd, 1);
+
 			break;
 		}
 
@@ -727,6 +876,8 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			WriteToEditBox(_hwnd, IDC_EDIT_B42, ptr[13]);
 			WriteToEditBox(_hwnd, IDC_EDIT_B43, ptr[14]);
 			WriteToEditBox(_hwnd, IDC_EDIT_B44, ptr[15]);
+
+			updatevaluesMatrix(_hwnd, 1);
 
 			break;
 		}
