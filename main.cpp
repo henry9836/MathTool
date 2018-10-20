@@ -503,7 +503,7 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			}
 
 
-			float* ptr = CMatrixCalculator::MultiplyMatrix(a11,  a12,  a13,  a14,  a21,  a22,  a23,  a24,  a31,  a32,  a33,  a34,  a41,  a42,  a43,  a44,  b11,  b12,  b13,  b14,  b21,  b22,  b23,  b24,  b31,  b32,  b33,  b34,  b41,  b42,  b43,  b44, tmp, tmp2, tmp3, true);
+			float* ptr = CMatrixCalculator::MultiplyMatrix(a11,  a12,  a13,  a14,  a21,  a22,  a23,  a24,  a31,  a32,  a33,  a34,  a41,  a42,  a43,  a44,  b11,  b12,  b13,  b14,  b21,  b22,  b23,  b24,  b31,  b32,  b33,  b34,  b41,  b42,  b43,  b44, tmp, tmp2, tmp3);
 			
 			//resemble
 			for (int i = 0; i < 4; i++) { //Prep to send to function
@@ -527,120 +527,6 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 				}
 			}
 			
-			WriteToEditBox(_hwnd, IDC_EDIT_R11, ptr[0]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R12, ptr[1]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R13, ptr[2]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R14, ptr[3]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R21, ptr[4]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R22, ptr[5]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R23, ptr[6]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R24, ptr[7]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R31, ptr[8]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R32, ptr[9]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R33, ptr[10]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R34, ptr[11]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R41, ptr[12]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R42, ptr[13]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R43, ptr[14]);
-			WriteToEditBox(_hwnd, IDC_EDIT_R44, ptr[15]);
-
-			break;
-		}
-
-		case IDOK5: {
-
-			float tmp[16];
-			float tmp2[16];
-			float tmp3[16];
-
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp[i] = MatrixA[0][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp[i + 4] = MatrixA[1][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp[i + 8] = MatrixA[2][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp[i + 12] = MatrixA[3][i];
-				}
-			}
-
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp2[i] = MatrixB[0][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp2[i + 4] = MatrixB[1][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp2[i + 8] = MatrixB[2][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp2[i + 12] = MatrixB[3][i];
-				}
-			}
-
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp3[i] = ResultMatrix[0][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp3[i + 4] = ResultMatrix[1][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp3[i + 8] = ResultMatrix[2][i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					tmp3[i + 12] = ResultMatrix[3][i];
-				}
-			}
-
-
-			float* ptr = CMatrixCalculator::MultiplyMatrix(a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44, b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44, tmp, tmp2, tmp3, false);
-
-			//resemble
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					ResultMatrix[0][i] = ptr[i];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					ResultMatrix[0][i] = ptr[i + 4];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					ResultMatrix[0][i] = ptr[i + 8];
-				}
-			}
-			for (int i = 0; i < 4; i++) { //Prep to send to function
-				if (i <= 4) {
-					ResultMatrix[0][i] = ptr[i + 12];
-				}
-			}
-
 			WriteToEditBox(_hwnd, IDC_EDIT_R11, ptr[0]);
 			WriteToEditBox(_hwnd, IDC_EDIT_R12, ptr[1]);
 			WriteToEditBox(_hwnd, IDC_EDIT_R13, ptr[2]);

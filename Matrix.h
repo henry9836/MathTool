@@ -21,11 +21,15 @@ public:
 	CMatrixCalculator();
 	~CMatrixCalculator();
 
+	void Multiplication_AB(double &_Sq1, double &_Sq2, double &_Sq3, double &_Sq4, double &_Sq5,
+		double &_Sq6, double &_Sq7, double &_Sq8, double &_Sq9, double &_Sq10, double &_Sq11,
+		double &_Sq12, double &_Sq13, double &_Sq14, double &_Sq15, double &_Sq16);
+
 	void Multiplication_BA(double &_Sq1, double &_Sq2, double &_Sq3, double &_Sq4, double &_Sq5,
 		double &_Sq6, double &_Sq7, double &_Sq8, double &_Sq9, double &_Sq10, double &_Sq11,
 		double &_Sq12, double &_Sq13, double &_Sq14, double &_Sq15, double &_Sq16);
 
-	static float* MultiplyMatrix(float a11, float a12, float a13, float a14, float a21, float a22, float a23, float a24, float a31, float a32, float a33, float a34, float a41, float a42, float a43, float a44, float b11, float b12, float b13, float b14, float b21, float b22, float b23, float b24, float b31, float b32, float b33, float b34, float b41, float b42, float b43, float b44, float matrixA[16], float matrixB[16], float matrixResult[16], bool AB);
+	static float* MultiplyMatrix(float a11, float a12, float a13, float a14, float a21, float a22, float a23, float a24, float a31, float a32, float a33, float a34, float a41, float a42, float a43, float a44, float b11, float b12, float b13, float b14, float b21, float b22, float b23, float b24, float b31, float b32, float b33, float b34, float b41, float b42, float b43, float b44, float matrixA[16], float matrixB[16], float matrixResult[16]);
 
 	static float Det(float a11, float a12, float a13, float a14, float a21, float a22, float a23, float a24, float a31, float a32, float a33, float a34, float a41, float a42, float a43, float a44);
 
