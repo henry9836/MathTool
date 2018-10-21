@@ -12,6 +12,7 @@
   - Multiplication
   - Determinate
   - Inverse
+  - Tranpose
   
 - Quaternion
   - Addition
