@@ -1,3 +1,17 @@
+//
+// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+//
+// (c) 2018 Media Design School
+//
+// File Name	: QuaternoinCalculator.cpp
+// Description	: Quaternoin Calculations
+// Author		: Henry Oliver
+// Mail			: henry.oliver@mediadesign.school.nz
+//
+
 #include "QuaternionCalculator.h"
 
 QuaternionCalculator::QuaternionCalculator()
@@ -57,18 +71,18 @@ void QuaternionCalculator::Subtraction_BA()
 
 void QuaternionCalculator::Multiplication_BA()
 {
-	this->r1 = (this->a2 * this->d1 + this->b2 * this->c1 - this->c2 * this->b1 + this->d2 * this->a1);
-	this->r2 = (-1 * this->a2 * this->c1 + this->b1 * this->d1 + this->c2 * this->a1 + this->d2 * this->b1);
-	this->r3 = (this->a2 * this->b1 - this->b2 * this->a1 + this->c2 * this->d1 + this->d2 * this->c1);
-	this->r4 = (-1 * this->a2 * this->a1 - this->b2 * this->b1 - this->c2 * this->c1 + this->d2 * this->d1);
+	this->r1 = (this->d2 * this->a1) + (this->a2* this->d1) + (this->b2* this->c1) - (this->c2 * this->b1);
+	this->r2 = (this->d2 * this->b1) - (this->a2* this->c1) + (this->b2* this->d1) + (this->c2 * this->a1);
+	this->r3 = (this->d2 * this->c1) + (this->a2* this->b1) - (this->b2* this->a1) + (this->c2 * this->d1);
+	this->r4 = (this->d2 * this->d1) - (this->a2* this->a1) - (this->b2 * this->b1) - (this->c2 * this->c1);
 }
 
 void QuaternionCalculator::Multiplication_AB()
 {
-	this->r1 = (this->a1 * this->d2 + this->b1 * this->c2 - this->c1 * this->b2 + this->d1 * this->a2);
-	this->r2 = (-1 * this->a1 * this->c2 + this->b1 * this->d2 + this->c1 * this->a2 + this->d1 * this->b2);
-	this->r3 = (this->a1 * this->b2 - this->b1 * this->a2 + this->c1 * this->d2 + this->d1 * this->c2);
-	this->r4 = (-1 * this->a1 * this->a2 - this->b1 * this->b2 - this->c1 * this->c2 + this->d1 * this->d2);
+	this->r1 = (this->d1 * this->a2) + (this->a1* this->d2) + (this->b1* this->c2) - (this->c1 * this->b2);
+	this->r2 = (this->d1 * this->b2) - (this->a1* this->c2) + (this->b1* this->d2) + (this->c1 * this->a2);
+	this->r3 = (this->d1 * this->c2) + (this->a1* this->b2) - (this->b1* this->a2) + (this->c1 * this->d2);
+	this->r4 = (this->d1 * this->d2) - (this->a1* this->a2) - (this->b1 * this->b2) - (this->c1 * this->c2);
 }
 
 float QuaternionCalculator::A_Dot_B()

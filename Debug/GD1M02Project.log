@@ -1,2 +1,4 @@
-﻿  main.cpp
+﻿  QuaternionCalculator.cpp
+d:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\quaternioncalculator.cpp(125): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\quaternioncalculator.cpp(132): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   GD1M02Project.vcxproj -> D:\UNI\Source\Matrix Tool\GD1M02Project\GD1M02Project\Debug\GD1M02Project.exe

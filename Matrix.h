@@ -1,3 +1,18 @@
+//
+// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+//
+// (c) 2018 Media Design School
+//
+// File Name	: Matrix.h
+// Description	: Matrix Calculations
+// Author		: Henry Oliver
+// Mail			: henry.oliver@mediadesign.school.nz
+//
+
+
 #pragma once
 #include <vector>
 #include <math.h>
