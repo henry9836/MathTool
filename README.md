@@ -23,3 +23,4 @@
   - T
   - dot
   - a* b*
+ -Slerp
