@@ -53,11 +53,13 @@ float MULTk(float tmp1, float tmp2, float tmp3, float tmp4, float as1, float bs1
 	return  ((tmp4 * cs1) + (tmp1 * bs1) - (tmp2 * as1) + (tmp3 * ds1));
 }
 
-float* slerp::MATRIX(HWND _hwnd, float as1, float bs1, float cs1, float ds1)
+
+CMatrix slerp::MATRIX(HWND _hwnd, float as1, float bs1, float cs1, float ds1)
 {
-	float MATray[16];
+	CMatrix MATray;
+
 	float* ptr; //to help send array through functions
-	ptr = MATray;
+	ptr = MATray.data;
 	float tmp1 = -as1; //i
 	float tmp2 = -bs1; //j
 	float tmp3 = -cs1; //k
@@ -78,31 +80,32 @@ float* slerp::MATRIX(HWND _hwnd, float as1, float bs1, float cs1, float ds1)
 	float s = 0.0f;
 	s = pow(i, -2.0f);
 
-	MATray[0] = (1.0f - (2.0f * s)*((pow(as1, 2)) + (pow(bs1, 2))));
-	MATray[1] = ((2.0f * s)*((as1*bs1) - (cs1 * ds1)));
-	MATray[2] = ((2.0f * s)*((as1 * cs1) - (bs1 * ds1)));
-	MATray[3] = (0.0f);
-	MATray[4] = ((2.0f * s) * ((as1 * bs1) + (cs1 * ds1)));
-	MATray[5] = (1.0f - (2.0f * s)*((pow(as1, 2)) + (pow(cs1, 2))));
-	MATray[6] = ((2.0f * s)*((bs1 * cs1) - (as1 * ds1)));
-	MATray[7] = (0.0f);
-	MATray[8] = ((2.0f * s)*((as1 * cs1) - (bs1 * ds1)));
-	MATray[9] = ((2.0f * s) * ((bs1 * cs1) + (as1 * ds1)));
-	MATray[10] = (1.0f - (2.0f * s)*((pow(as1, 2)) + (pow(bs1, 2))));
-	MATray[11] = (0.0f);
-	MATray[12] = (0.0f);
-	MATray[13] = (0.0f);
-	MATray[14] = (0.0f);
-	MATray[15] = (1.0f);
+	MATray.data[0] = (1.0f - (2.0f * s)*((pow(as1, 2)) + (pow(bs1, 2))));
+	MATray.data[1] = ((2.0f * s)*((as1*bs1) - (cs1 * ds1)));
+	MATray.data[2] = ((2.0f * s)*((as1 * cs1) - (bs1 * ds1)));
+	MATray.data[3] = (0.0f);
+	MATray.data[4] = ((2.0f * s) * ((as1 * bs1) + (cs1 * ds1)));
+	MATray.data[5] = (1.0f - (2.0f * s)*((pow(as1, 2)) + (pow(cs1, 2))));
+	MATray.data[6] = ((2.0f * s)*((bs1 * cs1) - (as1 * ds1)));
+	MATray.data[7] = (0.0f);
+	MATray.data[8] = ((2.0f * s)*((as1 * cs1) - (bs1 * ds1)));
+	MATray.data[9] = ((2.0f * s) * ((bs1 * cs1) + (as1 * ds1)));
+	MATray.data[10] = (1.0f - (2.0f * s)*((pow(as1, 2)) + (pow(bs1, 2))));
+	MATray.data[11] = (0.0f);
+	MATray.data[12] = (0.0f);
+	MATray.data[13] = (0.0f);
+	MATray.data[14] = (0.0f);
+	MATray.data[15] = (1.0f);
 
-	return ptr;
+	return MATray;
 }
 
-float* slerp::slerpQUART(HWND _hwnd, float as1, float bs1, float cs1, float ds1, float as2, float bs2, float cs2, float ds2, float tvalue)
+CSLERPRESULT slerp::slerpQUART(HWND _hwnd, float as1, float bs1, float cs1, float ds1, float as2, float bs2, float cs2, float ds2, float tvalue)
 {
-	float result[4];
+	CSLERPRESULT result;
+
 	float* ptr; //to help send array through functions
-	ptr = result;
+	ptr = result.data;
 
 	float tmp1 = 0.0f; //i
 	float tmp2 = 0.0f; //j
@@ -137,10 +140,10 @@ float* slerp::slerpQUART(HWND _hwnd, float as1, float bs1, float cs1, float ds1,
 		tmp3 = tmp3 + tmp7;
 		tmp4 = tmp4 + tmp8;
 
-		result[0] = tmp1;
-		result[1] = tmp2;
-		result[2] = tmp3;
-		result[3] = tmp4;
+		result.data[0] = tmp1;
+		result.data[1] = tmp2;
+		result.data[2] = tmp3;
+		result.data[3] = tmp4;
 
 	}
 	else
@@ -162,10 +165,10 @@ float* slerp::slerpQUART(HWND _hwnd, float as1, float bs1, float cs1, float ds1,
 
 		float ans = sqrt(tmp1 + tmp2 + tmp3 + tmp4);
 
-		result[0] = 0;
-		result[1] = 0;
-		result[2] = 0;
-		result[3] = ans;
+		result.data[0] = 0;
+		result.data[1] = 0;
+		result.data[2] = 0;
+		result.data[3] = ans;
 
 	}
 

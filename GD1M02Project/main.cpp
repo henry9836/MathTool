@@ -25,6 +25,7 @@
 #include "QuaternionCalculator.h"
 #include "Matrix.h"
 #include "slerp.h"
+#include "GaussianCalculator.h"
 
 float tmp[16];
 float tmp2[16];
@@ -54,8 +55,15 @@ float SlerpMatrix[4][4] = {
 	{ 0, 0, 0, 0 },
 	{ 0, 0, 0, 0 },
 	{ 0, 0, 0, 0 },
+	{ 0, 0, 0, 0},
+};
+
+float GuassMatrix[3][4] = {
+	{ 0, 0, 0, 0 },
+	{ 0, 0, 0, 0 },
 	{ 0, 0, 0, 0 },
 };
+
 
 /* MATRICES */
 float a11 = 0, a12 = 0, a13 = 0, a14 = 0, a21 = 0, a22 = 0, a23 = 0, a24 = 0, a31 = 0, a32 = 0, a33 = 0, a34 = 0, a41 = 0, a42 = 0, a43 = 0, a44 = 0, r11 = 0, r12 = 0, r13 = 0, r14 = 0, r21 = 0, r22 = 0, r23 = 0, r24 = 0, r31 = 0, r32 = 0, r33 = 0, r34 = 0, r41 = 0, r42 = 0, r43 = 0, r44 = 0, b11 = 0, b12 = 0, b13 = 0, b14 = 0, b21 = 0, b22 = 0, b23 = 0, b24 = 0, b31 = 0, b32 = 0, b33 = 0, b34 = 0, b41 = 0, b42 = 0, b43 = 0, b44 = 0;
@@ -66,10 +74,16 @@ float a1 = 0, a2 = 0, a3 = 0, a4 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, tvalue = 0
 /* SLERP */
 float as1 = 0, bs1 = 0, cs1 = 0, ds1 = 0, as2 = 0, bs2 = 0, cs2 = 0, ds2 = 0, tsvalue = 0, rs1 = 0, rs2 = 0, rs3 = 0, rs4 = 0;
 
+/* GUASSIAN */
+
+int i1, i3, i4, i6, i7 = 0;
+float i2, i5 = 0;
+
 HMENU g_hMenu;
 HWND g_hDlgMatrix, g_hDlgTransformation, g_hDlgGaussian, g_hDlgQuaternion, g_hDlgSLERP;
 QuaternionCalculator *objQC = new QuaternionCalculator();
 slerp *objSlerp = new slerp();
+GaussianCalculator *guass = new GaussianCalculator();
 
 int MatrixC = 0;
 
@@ -311,7 +325,22 @@ void updatevaluesMatrix(HWND _hwnd, int type) {
 		WriteToEditBox(_hwnd, IDC_EDIT48, SlerpMatrix[3][0]);
 		WriteToEditBox(_hwnd, IDC_EDIT49, SlerpMatrix[3][0]);
 	}
+	if (type == 3) {
+		GuassMatrix[0][0] = ReadFromEditBox(_hwnd, IDC_EDIT1);
+		GuassMatrix[0][1] = ReadFromEditBox(_hwnd, IDC_EDIT4);
+		GuassMatrix[0][2] = ReadFromEditBox(_hwnd, IDC_EDIT2);
+		GuassMatrix[0][3] = ReadFromEditBox(_hwnd, IDC_EDIT3);
 
+		GuassMatrix[1][0] = ReadFromEditBox(_hwnd, IDC_EDIT5);
+		GuassMatrix[1][1] = ReadFromEditBox(_hwnd, IDC_EDIT8);
+		GuassMatrix[1][2] = ReadFromEditBox(_hwnd, IDC_EDIT6);
+		GuassMatrix[1][3] = ReadFromEditBox(_hwnd, IDC_EDIT7);
+
+		GuassMatrix[2][0] = ReadFromEditBox(_hwnd, IDC_EDIT9);
+		GuassMatrix[2][1] = ReadFromEditBox(_hwnd, IDC_EDIT12);
+		GuassMatrix[2][2] = ReadFromEditBox(_hwnd, IDC_EDIT10);
+		GuassMatrix[2][3] = ReadFromEditBox(_hwnd, IDC_EDIT11);
+	}
 }
 
 void setQresult(HWND hwn) {
@@ -1047,7 +1076,304 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 
 	switch (_msg)
 	{
+	case WM_COMMAND: {
+		switch (LOWORD(_wparam))
+		{
+		case IDC_EDIT1:
+		{
+			GuassMatrix[0][0] = ReadFromEditBox(_hwnd, IDC_EDIT1);
+			break;
+		}
+		case IDC_EDIT4:
+		{
+			GuassMatrix[0][1] = ReadFromEditBox(_hwnd, IDC_EDIT4);
+			break;
+		}
+		case IDC_EDIT2:
+		{
+			GuassMatrix[0][2] = ReadFromEditBox(_hwnd, IDC_EDIT2);
+			break;
+		}
+		case IDC_EDIT3:
+		{
+			GuassMatrix[0][3] = ReadFromEditBox(_hwnd, IDC_EDIT3);
+			break;
+		}
 
+		case IDC_EDIT5:
+		{
+			GuassMatrix[1][0] = ReadFromEditBox(_hwnd, IDC_EDIT5);
+			break;
+		}
+		case IDC_EDIT8:
+		{
+			GuassMatrix[1][1] = ReadFromEditBox(_hwnd, IDC_EDIT8);
+			break;
+		}
+		case IDC_EDIT6:
+		{
+			GuassMatrix[1][2] = ReadFromEditBox(_hwnd, IDC_EDIT6);
+			break;
+		}
+		case IDC_EDIT7:
+		{
+			GuassMatrix[1][3] = ReadFromEditBox(_hwnd, IDC_EDIT7);
+			break;
+		}
+
+		case IDC_EDIT9:
+		{
+			GuassMatrix[2][0] = ReadFromEditBox(_hwnd, IDC_EDIT9);
+			break;
+		}
+		case IDC_EDIT12:
+		{
+			GuassMatrix[2][1] = ReadFromEditBox(_hwnd, IDC_EDIT12);
+			break;
+		}
+		case IDC_EDIT10:
+		{
+			GuassMatrix[2][2] = ReadFromEditBox(_hwnd, IDC_EDIT10);
+			break;
+		}
+		case IDC_EDIT11:
+		{
+			GuassMatrix[2][3] = ReadFromEditBox(_hwnd, IDC_EDIT11);
+			break;
+		}
+
+		case IDC_EDIT13:
+		{
+			i1 = static_cast<int>(ReadFromEditBox(_hwnd, IDC_EDIT13));
+			break;
+		}
+		case IDC_EDIT14:
+		{
+			i2 = ReadFromEditBox(_hwnd, IDC_EDIT14);
+			break;
+		}
+		case IDC_EDIT16:
+		{
+			i3 = static_cast<int>(ReadFromEditBox(_hwnd, IDC_EDIT16));
+			break;
+		}
+		case IDC_EDIT17:
+		{
+			i4 = static_cast<int>(ReadFromEditBox(_hwnd, IDC_EDIT17));
+			break;
+		}
+		case IDC_EDIT19:
+		{
+			i5 = ReadFromEditBox(_hwnd, IDC_EDIT19);
+			break;
+		}
+		case IDC_EDIT20:
+		{
+			i6 = static_cast<int>(ReadFromEditBox(_hwnd, IDC_EDIT20));
+			break;
+		}
+		case IDC_EDIT22:
+		{
+			i7 = static_cast<int>(ReadFromEditBox(_hwnd, IDC_EDIT22));
+			break;
+		}
+
+		case IDC_BUTTON1: {
+
+			float gtmp[4];
+
+			/*for (int i = 0; i < 4; i++) {
+				gtmp[i] = GuassMatrix[i1-1][i];
+			}*/
+
+			gtmp[0] = GuassMatrix[i1 - 1][0];
+			gtmp[1] = GuassMatrix[i1 - 1][1];
+			gtmp[2] = GuassMatrix[i1 - 1][2];
+			gtmp[3] = GuassMatrix[i1 - 1][3];
+
+			ROW result = guass->Multiply_Row_By(gtmp, i2);
+
+			for (int i = 0; i < 4; i++) {
+				GuassMatrix[i1-1][i] = result.data[i];
+			}
+
+			switch (i1)
+			{
+			case 1:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT1, result.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT4, result.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT2, result.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT3, result.data[3]);
+				break;
+			}
+
+			case 2:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT5, result.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT8, result.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT6, result.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT7, result.data[3]);
+				break;
+			}
+
+			case 3:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT9, result.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT12, result.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT10, result.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT11, result.data[3]);
+				break;
+			}
+
+			default:
+				break;
+			}
+
+			updatevaluesMatrix(_hwnd, 3);
+
+			break;
+		}
+		case IDC_BUTTON2: {
+
+			ROW tmp_row;
+			ROW tmp_row2;
+
+			for (int i = 0; i < 4; i++) {
+				
+				tmp_row.data[i] = GuassMatrix[i3-1][i];
+				tmp_row2.data[i] = GuassMatrix[i4 - 1][i];
+
+				GuassMatrix[i4-1][i] = tmp_row.data[i];
+				GuassMatrix[i3 - 1][i] = tmp_row2.data[i];
+
+			}
+
+			switch (i4)
+			{
+			case 1:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT1, tmp_row.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT4, tmp_row.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT2, tmp_row.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT3, tmp_row.data[3]);
+				break;
+			}
+
+			case 2:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT5, tmp_row.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT8, tmp_row.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT6, tmp_row.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT7, tmp_row.data[3]);
+				break;
+			}
+
+			case 3:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT9, tmp_row.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT12, tmp_row.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT10, tmp_row.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT11, tmp_row.data[3]);
+				break;
+			}
+
+			default:
+				break;
+			}
+
+			switch (i3)
+			{
+			case 1:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT1, tmp_row2.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT4, tmp_row2.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT2, tmp_row2.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT3, tmp_row2.data[3]);
+				break;
+			}
+
+			case 2:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT5, tmp_row2.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT8, tmp_row2.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT6, tmp_row2.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT7, tmp_row2.data[3]);
+				break;
+			}
+
+			case 3:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT9, tmp_row2.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT12, tmp_row2.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT10, tmp_row2.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT11, tmp_row2.data[3]);
+				break;
+			}
+
+			default:
+				break;
+			}
+
+			updatevaluesMatrix(_hwnd, 3);
+
+			break;
+		}
+		case IDC_BUTTON3: {
+
+			ROW tmp;
+
+			for (int i = 0; i < 4; i++) {
+
+				tmp.data[i] = GuassMatrix[i6 - 1][i];
+
+			}
+
+			ROW result = guass->AddTimestoRow(tmp.data, i5);
+
+			switch (i7)
+			{
+			case 1:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT1, result.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT4, result.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT2, result.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT3, result.data[3]);
+				break;
+			}
+
+			case 2:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT5, result.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT8, result.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT6, result.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT7, result.data[3]);
+				break;
+			}
+
+			case 3:
+			{
+				WriteToEditBox(_hwnd, IDC_EDIT9, result.data[0]);
+				WriteToEditBox(_hwnd, IDC_EDIT12, result.data[1]);
+				WriteToEditBox(_hwnd, IDC_EDIT10, result.data[2]);
+				WriteToEditBox(_hwnd, IDC_EDIT11, result.data[3]);
+				break;
+			}
+
+			default:
+				break;
+			}
+
+			updatevaluesMatrix(_hwnd, 3);
+
+			break;
+		}
+
+		default:
+			break;
+		}
+		break;
+	}
 	case WM_CLOSE:
 	{
 		ShowWindow(_hwnd, SW_HIDE);
@@ -1281,26 +1607,26 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 		case IDC_BUTTON1:
 		{
 
-			float* ptr = objSlerp->slerpQUART(_hwnd, as1, bs1, cs1, ds1, as2, bs2, cs2, ds2, tsvalue);
+			CSLERPRESULT ptr = objSlerp->slerpQUART(_hwnd, as1, bs1, cs1, ds1, as2, bs2, cs2, ds2, tsvalue);
 
-			WriteToEditBox(_hwnd, IDC_EDIT10, ptr[0]);
-			WriteToEditBox(_hwnd, IDC_EDIT11, ptr[1]);
-			WriteToEditBox(_hwnd, IDC_EDIT12, ptr[2]);
-			WriteToEditBox(_hwnd, IDC_EDIT13, ptr[3]);
+			WriteToEditBox(_hwnd, IDC_EDIT10, ptr.data[0]);
+			WriteToEditBox(_hwnd, IDC_EDIT11, ptr.data[1]);
+			WriteToEditBox(_hwnd, IDC_EDIT12, ptr.data[2]);
+			WriteToEditBox(_hwnd, IDC_EDIT13, ptr.data[3]);
 
-			rs1 = ptr[0];
-			rs2 = ptr[1];
-			rs3 = ptr[2];
-			rs4 = ptr[3];
+			rs1 = ptr.data[0];
+			rs2 = ptr.data[1];
+			rs3 = ptr.data[2];
+			rs4 = ptr.data[3];
 
 			break;
 		}
 		/* Matrix Time */
 		case IDC_BUTTON2:
 		{
-			float* ptr = objSlerp->MATRIX(_hwnd, as1, bs1, cs1, ds1);
-
-			reassmbleslerp(ptr);
+			CMatrix m = objSlerp->MATRIX(_hwnd, as1, bs1, cs1, ds1);
+			
+			reassmbleslerp(m.data);
 
 			updatevaluesMatrix(_hwnd, 2);
 			WriteToEditBox(_hwnd, IDC_EDIT49, 1.0f);
@@ -1309,9 +1635,9 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 
 		case IDC_BUTTON3:
 		{
-			float* ptr = objSlerp->MATRIX(_hwnd, as2, bs2, cs2, ds2);
+			CMatrix m = objSlerp->MATRIX(_hwnd, as2, bs2, cs2, ds2);
 
-			reassmbleslerp(ptr);
+			reassmbleslerp(m.data);
 
 			updatevaluesMatrix(_hwnd, 2);
 			WriteToEditBox(_hwnd, IDC_EDIT49, 1.0f);
@@ -1320,9 +1646,9 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 
 		case IDC_BUTTON4:
 		{
-			float* ptr = objSlerp->MATRIX(_hwnd, rs1, rs2, rs3, rs4);
+			CMatrix m = objSlerp->MATRIX(_hwnd, rs1, rs2, rs3, rs4);
 
-			reassmbleslerp(ptr);
+			reassmbleslerp(m.data);
 
 			updatevaluesMatrix(_hwnd, 2);
 
