@@ -23,4 +23,5 @@
   - T
   - dot
   - a* b*
- -Slerp
+- Slerp
+- Gaussian
