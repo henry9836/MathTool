@@ -1322,14 +1322,15 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 		case IDC_BUTTON3: {
 
 			ROW tmp;
+			ROW tmp2;
 
 			for (int i = 0; i < 4; i++) {
 
 				tmp.data[i] = GuassMatrix[i6 - 1][i];
-
+				tmp2.data[i] = GuassMatrix[i7 - 1][i];
 			}
 
-			ROW result = guass->AddTimestoRow(tmp.data, i5);
+			ROW result = guass->AddTimestoRow(tmp.data, tmp2.data, i5);
 
 			switch (i7)
 			{

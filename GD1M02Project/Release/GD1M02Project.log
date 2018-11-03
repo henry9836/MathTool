@@ -1,9 +1,8 @@
 ﻿  GaussianCalculator.cpp
   main.cpp
-  Matrix.cpp
-  QuaternionCalculator.cpp
-  slerp.cpp
   Generating code
-  All 159 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  3 of 159 functions ( 1.9%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   GD1M02Project.vcxproj -> G:\UNI\Source\Matrix Tool\GD1M02Project\GD1M02Project\Release\GD1M02Project.exe

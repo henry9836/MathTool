@@ -1,7 +1,4 @@
 ﻿  GaussianCalculator.cpp
   main.cpp
-  Matrix.cpp
-  QuaternionCalculator.cpp
-  slerp.cpp
   Generating Code...
   GD1M02Project.vcxproj -> G:\UNI\Source\Matrix Tool\GD1M02Project\GD1M02Project\Debug\GD1M02Project.exe

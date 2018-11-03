@@ -19,7 +19,7 @@ public:
 	GaussianCalculator();
 	~GaussianCalculator();
 	ROW Multiply_Row_By(float _Row[4], float _Value);
-	ROW AddTimestoRow(float _Row[4], float _Num);
+	ROW AddTimestoRow(float _Row[4], float Old_row[4], float _Num);
 
 	float Row[1][4];
 	float Matrix[3][4];

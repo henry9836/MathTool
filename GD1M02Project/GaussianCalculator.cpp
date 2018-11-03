@@ -8,7 +8,7 @@ GaussianCalculator::~GaussianCalculator()
 {
 }
 
-ROW GaussianCalculator::Multiply_Row_By(float _Row[4],float _Value) {
+ROW GaussianCalculator::Multiply_Row_By(float _Row[4], float _Value) {
 
 	ROW result;
 
@@ -19,19 +19,22 @@ ROW GaussianCalculator::Multiply_Row_By(float _Row[4],float _Value) {
 	return result;
 }
 
- ROW GaussianCalculator::AddTimestoRow(float _Row[4], float _Num) {
+ ROW GaussianCalculator::AddTimestoRow(float _Row[4], float Old_row[4], float _Num) {
 	
 	 ROW resultRow;
 	 ROW toAddRow;
+	 ROW oldRow;
 
 	for (int _i = 0; _i < 4; _i++) {
 		toAddRow.data[_i] = _Row[_i];
+		oldRow.data[_i] = Old_row[_i];
 	}
 
 	resultRow = Multiply_Row_By(_Row, _Num);
 
-	/*for (int j = 0; j < 4; j++) {
-		resultRow.data[j] = resultRow.data[j] + toAddRow.data[j];
-	}*/
+	for (int _i = 0; _i < 4; _i++) {
+		resultRow.data[_i] = oldRow.data[_i] + resultRow.data[_i];
+	}
+
 	return resultRow;
 }
