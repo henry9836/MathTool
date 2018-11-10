@@ -53,20 +53,20 @@ Matrix TransformationCalculator::Rot_Row(float x, float y, float z, float angle,
 		y = 0;
 		z = 0;
 		mat.data[0] = 1.0f; mat.data[1] = 0.0f; mat.data[2] = 0.0f; mat.data[3] = 0.0f;
-		mat.data[4] = 0.0f; mat.data[5] = cos(angle); mat.data[6] = sin(angle); mat.data[7] = 0.0f;
-		mat.data[8] = 0.0f; mat.data[9] = -sin(angle); mat.data[10] = cos(angle); mat.data[11] = 0.0f;
+		mat.data[4] = 0.0f; mat.data[5] = cosf(angle); mat.data[6] = sinf(angle); mat.data[7] = 0.0f;
+		mat.data[8] = 0.0f; mat.data[9] = -sinf(angle); mat.data[10] = cosf(angle); mat.data[11] = 0.0f;
 		mat.data[12] = 0.0f; mat.data[13] = 0.0f; mat.data[14] = 0.0f; mat.data[15] = 1.0f;
 	}
 	if (y == 1) {
 		z = 0;
-		mat.data[0] = cos(angle); mat.data[1] = 0; mat.data[2] = -sin(angle); mat.data[3] = 0;
+		mat.data[0] = cosf(angle); mat.data[1] = 0; mat.data[2] = -sinf(angle); mat.data[3] = 0;
 		mat.data[4] = 0; mat.data[5] = 1; mat.data[6] = 0; mat.data[7] = 0;
-		mat.data[8] = sin(angle); mat.data[9] = 0; mat.data[10] = cos(angle); mat.data[11] = 0;
+		mat.data[8] = sinf(angle); mat.data[9] = 0; mat.data[10] = cosf(angle); mat.data[11] = 0;
 		mat.data[12] = 0; mat.data[13] = 0; mat.data[14] = 0; mat.data[15] = 1;
 	}
 	if (z == 1) {
-		mat.data[0] = cos(angle); mat.data[1] = sin(angle); mat.data[2] = 0; mat.data[3] = 0;
-		mat.data[4] = -sin(angle); mat.data[5] = cos(angle); mat.data[6] = 0; mat.data[7] = 0;
+		mat.data[0] = cosf(angle); mat.data[1] = sinf(angle); mat.data[2] = 0; mat.data[3] = 0;
+		mat.data[4] = -sinf(angle); mat.data[5] = cosf(angle); mat.data[6] = 0; mat.data[7] = 0;
 		mat.data[8] = 0; mat.data[9] = 0; mat.data[10] = 1; mat.data[11] = 0;
 		mat.data[12] = 0; mat.data[13] = 0; mat.data[14] = 0; mat.data[15] = 1;
 	}
@@ -80,20 +80,20 @@ Matrix TransformationCalculator::Rot_Column(float x, float y, float z, float ang
 		y = 0;
 		z = 0;
 		mat.data[0] = 1; mat.data[1] = 0; mat.data[2] = 0; mat.data[3] = 0;
-		mat.data[4] = 0; mat.data[5] = cos(angle); mat.data[6] = -sin(angle); mat.data[7] = 0;
-		mat.data[8] = 0; mat.data[9] = sin(angle); mat.data[10] = cos(angle); mat.data[11] = 0;
+		mat.data[4] = 0; mat.data[5] = cosf(angle); mat.data[6] = -sinf(angle); mat.data[7] = 0;
+		mat.data[8] = 0; mat.data[9] = sinf(angle); mat.data[10] = cosf(angle); mat.data[11] = 0;
 		mat.data[12] = 0; mat.data[13] = 0; mat.data[14] = 0; mat.data[15] = 1;
 	}
 	if (y == 1) {
 		z = 0;
-		mat.data[0] = cos(angle); mat.data[1] = 0; mat.data[2] = sin(angle); mat.data[3] = 0;
+		mat.data[0] = cosf(angle); mat.data[1] = 0; mat.data[2] = sinf(angle); mat.data[3] = 0;
 		mat.data[4] = 0; mat.data[5] = 1; mat.data[6] = 0; mat.data[7] = 0;
-		mat.data[8] = -sin(angle); mat.data[9] = 0; mat.data[10] = cos(angle); mat.data[11] = 0;
+		mat.data[8] = -sinf(angle); mat.data[9] = 0; mat.data[10] = cosf(angle); mat.data[11] = 0;
 		mat.data[12] = 0; mat.data[13] = 0; mat.data[14] = 0; mat.data[15] = 1;
 	}
 	if (z == 1) {
-		mat.data[0] = cos(angle); mat.data[1] = -sin(angle); mat.data[2] = 0; mat.data[3] = 0;
-		mat.data[4] = sin(angle); mat.data[5] = cos(angle); mat.data[6] = 0; mat.data[7] = 0;
+		mat.data[0] = cosf(angle); mat.data[1] = -sinf(angle); mat.data[2] = 0; mat.data[3] = 0;
+		mat.data[4] = sinf(angle); mat.data[5] = cosf(angle); mat.data[6] = 0; mat.data[7] = 0;
 		mat.data[8] = 0; mat.data[9] = 0; mat.data[10] = 1; mat.data[11] = 0;
 		mat.data[12] = 0; mat.data[13] = 0; mat.data[14] = 0; mat.data[15] = 1;
 	}

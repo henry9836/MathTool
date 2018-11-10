@@ -4,19 +4,7 @@
   QuaternionCalculator.cpp
   slerp.cpp
   TransformationCalculator.cpp
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(56): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(62): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(64): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(68): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(69): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(84): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(89): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(91): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(95): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\uni\source\matrix tool\gd1m02project\gd1m02project\gd1m02project\transformationcalculator.cpp(96): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating code
-  All 169 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 170 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   GD1M02Project.vcxproj -> G:\UNI\Source\Matrix Tool\GD1M02Project\GD1M02Project\Release\GD1M02Project.exe
