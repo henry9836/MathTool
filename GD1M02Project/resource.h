@@ -1,7 +1,7 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by GD1M02Project.rc
-
+//
 #define IDOK2                           3
 #define IDOK3                           4
 #define IDCANCEL2                       5
@@ -63,7 +63,6 @@
 #define IDC_EDIT27                      1027
 #define IDC_EDIT28                      1028
 #define IDC_BUTTON4                     1029
-#define IDC_BUTTON14                    10290
 #define IDC_EDIT30                      1030
 #define IDC_BUTTON15                    1030
 #define IDC_EDIT_A11                    1030
@@ -73,11 +72,16 @@
 #define IDC_EDIT_A13                    1032
 #define IDC_EDIT33                      1033
 #define IDC_EDIT_AScaled                1033
+#define IDC_CHECK1                      1033
 #define IDC_EDIT34                      1034
+#define IDC_EDIT32                      1034
 #define IDC_EDIT35                      1035
 #define IDC_EDIT36                      1036
+#define IDC_CHECK2                      1036
 #define IDC_EDIT37                      1037
+#define IDC_CHECK3                      1037
 #define IDC_EDIT38                      1038
+#define IDC_CHECK4                      1038
 #define IDC_EDIT39                      1039
 #define IDC_EDIT40                      1040
 #define IDC_EDIT41                      1041
@@ -168,6 +172,7 @@
 #define IDC_EDIT_R44                    1097
 #define IDC_EDIT_DetB                   1098
 #define IDC_EDIT_BScaled                1099
+#define IDC_BUTTON14                    10290
 #define ID_CALCULATOR_MATRIX            40001
 #define ID_CALCULATOR_TRANSFORMATION    40002
 #define ID_CALCULATOR_GAUSIIAN          40003
@@ -180,9 +185,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        101
+#define _APS_NEXT_RESOURCE_VALUE        102
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_CONTROL_VALUE         1039
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

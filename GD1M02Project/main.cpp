@@ -26,44 +26,55 @@
 #include "Matrix.h"
 #include "slerp.h"
 #include "GaussianCalculator.h"
+#include "TransformationCalculator.h"
 
 float tmp[16];
 float tmp2[16];
 float tmp3[16];
 float ResultMatrix[4][4] = {
 	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
 };
 
 float MatrixA[4][4] = {
 	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
 };
 
 float MatrixB[4][4] = {
 	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
 };
 
 float SlerpMatrix[4][4] = {
 	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0},
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
 };
 
 float GuassMatrix[3][4] = {
 	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
+{ 0, 0, 0, 0 },
 };
 
+Matrix TransResultantMatrixA;
+Matrix TransResultantMatrixB;
+Matrix TransResultantMatrixTA;
+Matrix TransResultantMatrixTB;
+Matrix TransResultantMatrixTC;
+Matrix TransResultantMatrixTD;
+Matrix TransResultantMatrixTE;
+Matrix TransResultantMatrixTF;
+Matrix TransResultantMatrixTG;
+Matrix TransResultantMatrixTH;
 
 /* MATRICES */
 float a11 = 0, a12 = 0, a13 = 0, a14 = 0, a21 = 0, a22 = 0, a23 = 0, a24 = 0, a31 = 0, a32 = 0, a33 = 0, a34 = 0, a41 = 0, a42 = 0, a43 = 0, a44 = 0, r11 = 0, r12 = 0, r13 = 0, r14 = 0, r21 = 0, r22 = 0, r23 = 0, r24 = 0, r31 = 0, r32 = 0, r33 = 0, r34 = 0, r41 = 0, r42 = 0, r43 = 0, r44 = 0, b11 = 0, b12 = 0, b13 = 0, b14 = 0, b21 = 0, b22 = 0, b23 = 0, b24 = 0, b31 = 0, b32 = 0, b33 = 0, b34 = 0, b41 = 0, b42 = 0, b43 = 0, b44 = 0;
@@ -79,11 +90,19 @@ float as1 = 0, bs1 = 0, cs1 = 0, ds1 = 0, as2 = 0, bs2 = 0, cs2 = 0, ds2 = 0, ts
 int i1, i3, i4, i6, i7 = 0;
 float i2, i5 = 0;
 
+/* TRANSFORMATION */
+float sx, sy, sz, tx, ty, tz, rotx, roty, rotz, angle, prox, proy, proz, distance = 0;
+bool scale = false;
+bool trans_m = false;
+bool rot = false;
+bool pro = false;
+
 HMENU g_hMenu;
 HWND g_hDlgMatrix, g_hDlgTransformation, g_hDlgGaussian, g_hDlgQuaternion, g_hDlgSLERP;
 QuaternionCalculator *objQC = new QuaternionCalculator();
 slerp *objSlerp = new slerp();
 GaussianCalculator *guass = new GaussianCalculator();
+TransformationCalculator *trans = new TransformationCalculator();
 
 int MatrixC = 0;
 
@@ -340,6 +359,50 @@ void updatevaluesMatrix(HWND _hwnd, int type) {
 		GuassMatrix[2][1] = ReadFromEditBox(_hwnd, IDC_EDIT12);
 		GuassMatrix[2][2] = ReadFromEditBox(_hwnd, IDC_EDIT10);
 		GuassMatrix[2][3] = ReadFromEditBox(_hwnd, IDC_EDIT11);
+	}
+	if (type == 4) {
+		WriteToEditBox(_hwnd, IDC_EDIT16, TransResultantMatrixA.data[0]);
+		WriteToEditBox(_hwnd, IDC_EDIT18, TransResultantMatrixA.data[1]);
+		WriteToEditBox(_hwnd, IDC_EDIT19, TransResultantMatrixA.data[2]);
+		WriteToEditBox(_hwnd, IDC_EDIT20, TransResultantMatrixA.data[3]);
+
+		WriteToEditBox(_hwnd, IDC_EDIT21, TransResultantMatrixA.data[4]);
+		WriteToEditBox(_hwnd, IDC_EDIT22, TransResultantMatrixA.data[5]);
+		WriteToEditBox(_hwnd, IDC_EDIT23, TransResultantMatrixA.data[6]);
+		WriteToEditBox(_hwnd, IDC_EDIT8, TransResultantMatrixA.data[7]);
+
+		WriteToEditBox(_hwnd, IDC_EDIT9, TransResultantMatrixA.data[8]);
+		WriteToEditBox(_hwnd, IDC_EDIT10, TransResultantMatrixA.data[9]);
+		WriteToEditBox(_hwnd, IDC_EDIT11, TransResultantMatrixA.data[10]);
+		WriteToEditBox(_hwnd, IDC_EDIT12, TransResultantMatrixA.data[11]);
+
+		WriteToEditBox(_hwnd, IDC_EDIT24, TransResultantMatrixA.data[12]);
+		WriteToEditBox(_hwnd, IDC_EDIT25, TransResultantMatrixA.data[13]);
+		WriteToEditBox(_hwnd, IDC_EDIT26, TransResultantMatrixA.data[14]);
+		WriteToEditBox(_hwnd, IDC_EDIT27, TransResultantMatrixA.data[15]);
+
+
+
+		WriteToEditBox(_hwnd, IDC_EDIT47, TransResultantMatrixB.data[0]);
+		WriteToEditBox(_hwnd, IDC_EDIT48, TransResultantMatrixB.data[1]);
+		WriteToEditBox(_hwnd, IDC_EDIT49, TransResultantMatrixB.data[2]);
+		WriteToEditBox(_hwnd, IDC_EDIT50, TransResultantMatrixB.data[3]);
+
+		WriteToEditBox(_hwnd, IDC_EDIT51, TransResultantMatrixB.data[4]);
+		WriteToEditBox(_hwnd, IDC_EDIT52, TransResultantMatrixB.data[5]);
+		WriteToEditBox(_hwnd, IDC_EDIT53, TransResultantMatrixB.data[6]);
+		WriteToEditBox(_hwnd, IDC_EDIT54, TransResultantMatrixB.data[7]);
+
+		WriteToEditBox(_hwnd, IDC_EDIT55, TransResultantMatrixB.data[8]);
+		WriteToEditBox(_hwnd, IDC_EDIT56, TransResultantMatrixB.data[9]);
+		WriteToEditBox(_hwnd, IDC_EDIT57, TransResultantMatrixB.data[10]);
+		WriteToEditBox(_hwnd, IDC_EDIT58, TransResultantMatrixB.data[11]);
+
+		WriteToEditBox(_hwnd, IDC_EDIT59, TransResultantMatrixB.data[12]);
+		WriteToEditBox(_hwnd, IDC_EDIT60, TransResultantMatrixB.data[13]);
+		WriteToEditBox(_hwnd, IDC_EDIT61, TransResultantMatrixB.data[14]);
+		WriteToEditBox(_hwnd, IDC_EDIT62, TransResultantMatrixB.data[15]);
+
 	}
 }
 
@@ -731,7 +794,7 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			prep();
 
 			float* ptr = CMatrixCalculator::Multiply_by(a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44, b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44, tmp, tmp2, tmp3, true, mult);
-			
+
 			reassmble(ptr);
 
 			WriteToEditBox(_hwnd, IDC_EDIT_A11, ptr[0]);
@@ -752,7 +815,7 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 			WriteToEditBox(_hwnd, IDC_EDIT_A44, ptr[15]);
 
 			updatevaluesMatrix(_hwnd, 0);
-			
+
 			break;
 		}
 
@@ -1048,22 +1111,173 @@ BOOL CALLBACK MatrixDlgProc(HWND _hwnd,
 }
 
 BOOL CALLBACK TransformationDlgProc(HWND _hwnd,
-	UINT _msg,
-	WPARAM _wparam,
-	LPARAM _lparam)
+UINT _msg,
+WPARAM _wparam,
+LPARAM _lparam)
 {
-
-	switch (_msg)
+switch (_msg)
+{
+case WM_COMMAND: {
+	switch (LOWORD(_wparam))
 	{
+		case IDC_EDIT1: {
+			sx = ReadFromEditBox(_hwnd, IDC_EDIT1);
+			break;
+		}
+		case IDC_EDIT2: {
+			sy = ReadFromEditBox(_hwnd, IDC_EDIT2);
+			break;
+		}
+		case IDC_EDIT3: {
+			sz = ReadFromEditBox(_hwnd, IDC_EDIT3);
+			break;
+		}
+		case IDC_EDIT4: {
+			tx = ReadFromEditBox(_hwnd, IDC_EDIT4);
+			break;
+		}
+		case IDC_EDIT5: {
+			ty = ReadFromEditBox(_hwnd, IDC_EDIT5);
+			break;
+		}
+		case IDC_EDIT6: {
+			tz = ReadFromEditBox(_hwnd, IDC_EDIT6);
+			break;
+		}
+		case IDC_EDIT7: {
+			rotx = ReadFromEditBox(_hwnd, IDC_EDIT7);
+			break;
+		}
+		case IDC_EDIT28: {
+			roty = ReadFromEditBox(_hwnd, IDC_EDIT28);
+			break;
+		}
+		case IDC_EDIT30: {
+			rotz = ReadFromEditBox(_hwnd, IDC_EDIT30);
+			break;
+		}
+		case IDC_EDIT13: {
+			angle = ReadFromEditBox(_hwnd, IDC_EDIT13);
+			break;
+		}
+		case IDC_EDIT14: {
+			prox = ReadFromEditBox(_hwnd, IDC_EDIT14);
+			break;
+		}
+		case IDC_EDIT29: {
+			proy = ReadFromEditBox(_hwnd, IDC_EDIT29);
+			break;
+		}
+		case IDC_EDIT31: {
+			proz = ReadFromEditBox(_hwnd, IDC_EDIT31);
+			break;
+		}
+		case IDC_EDIT15: {
+			distance = ReadFromEditBox(_hwnd, IDC_EDIT15);
+			break;
+		}
+		case IDC_CHECK1: {
+			scale = !scale;
+			break;
+		}
+		case IDC_CHECK2: {
+			trans_m = !trans_m;
+			break;
+		}
+		case IDC_CHECK3: {
+			rot = !rot;
+			break;
+		}
+		case IDC_CHECK4: {
+			pro = !pro;
+			break;
+		}
+		case IDC_BUTTON4: {
+
+			if (scale) {
+				TransResultantMatrixB = TransResultantMatrixA = trans->Scale_RowColumn(sx, sy, sz, TransResultantMatrixA);
+				TransResultantMatrixTA = TransResultantMatrixTB = TransResultantMatrixA;
+			}
+			if (trans_m) {
+				TransResultantMatrixA = trans->Translate_Row(tx, ty, tz, TransResultantMatrixA);
+				TransResultantMatrixB = trans->Translate_Column(tx, ty, tz, TransResultantMatrixB);
+				TransResultantMatrixTC = TransResultantMatrixA;
+				TransResultantMatrixTD = TransResultantMatrixB;
+			}
+			if (rot) {
+				TransResultantMatrixA = trans->Rot_Row(rotx, roty, rotz, angle, TransResultantMatrixA);
+				TransResultantMatrixB = trans->Rot_Column(rotx, roty, rotz, angle, TransResultantMatrixB);
+				TransResultantMatrixTE = TransResultantMatrixA;
+				TransResultantMatrixTF = TransResultantMatrixB;
+			}
+			if (pro) {
+				TransResultantMatrixA = trans->Proj_Row(prox, proy, proz, distance, TransResultantMatrixA);
+				TransResultantMatrixB = trans->Proj_Column(prox, proy, proz, distance, TransResultantMatrixB);
+				TransResultantMatrixTG = TransResultantMatrixA;
+				TransResultantMatrixTH = TransResultantMatrixB;
+			}
+
+			if (scale || trans_m || rot || pro) {
+				if (scale) {
+					TransResultantMatrixA = TransResultantMatrixB = TransResultantMatrixTA;
+					if (trans_m) {
+						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTC, TransResultantMatrixA);
+						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTD, TransResultantMatrixB);
+					}
+					if (rot) {
+						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTE, TransResultantMatrixA);
+						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTF, TransResultantMatrixB);
+					}
+					if (pro) {
+						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTG, TransResultantMatrixA);
+						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTH, TransResultantMatrixB);
+					}
+				}
+				else if (trans_m) {
+					TransResultantMatrixA = TransResultantMatrixTC;
+					TransResultantMatrixB = TransResultantMatrixTD;
+					if (rot) {
+						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTE, TransResultantMatrixA);
+						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTF, TransResultantMatrixB);
+					}
+					if (pro) {
+						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTG, TransResultantMatrixA);
+						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTH, TransResultantMatrixB);
+					}
+				}
+				else if (rot) {
+					TransResultantMatrixA = TransResultantMatrixTE;
+					TransResultantMatrixB = TransResultantMatrixTF;
+					if (pro) {
+						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTG, TransResultantMatrixA);
+						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTH, TransResultantMatrixB);
+					}
+				}
+			}
+
+			if (!scale && !trans_m && !rot && !pro) {
+				MessageBox(_hwnd, L"Please Select at least one mode", L"Error", MB_ICONWARNING);
+			}
+
+			updatevaluesMatrix(_hwnd, 4);
+			break;
+		}
+		default:
+			break;
+		}
+		break;
+		return FALSE;
+	}
 	case WM_CLOSE:
 	{
 		ShowWindow(_hwnd, SW_HIDE);
 		return TRUE;
 		break;
 	}
-	default:
-		break;
+		default:
+			break;
 	}
+
 	return FALSE;
 }
 
@@ -1183,7 +1397,7 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 			float gtmp[4];
 
 			/*for (int i = 0; i < 4; i++) {
-				gtmp[i] = GuassMatrix[i1-1][i];
+			gtmp[i] = GuassMatrix[i1-1][i];
 			}*/
 
 			gtmp[0] = GuassMatrix[i1 - 1][0];
@@ -1194,7 +1408,7 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 			ROW result = guass->Multiply_Row_By(gtmp, i2);
 
 			for (int i = 0; i < 4; i++) {
-				GuassMatrix[i1-1][i] = result.data[i];
+				GuassMatrix[i1 - 1][i] = result.data[i];
 			}
 
 			switch (i1)
@@ -1240,11 +1454,11 @@ BOOL CALLBACK GaussianDlgProc(HWND _hwnd,
 			ROW tmp_row2;
 
 			for (int i = 0; i < 4; i++) {
-				
-				tmp_row.data[i] = GuassMatrix[i3-1][i];
+
+				tmp_row.data[i] = GuassMatrix[i3 - 1][i];
 				tmp_row2.data[i] = GuassMatrix[i4 - 1][i];
 
-				GuassMatrix[i4-1][i] = tmp_row.data[i];
+				GuassMatrix[i4 - 1][i] = tmp_row.data[i];
 				GuassMatrix[i3 - 1][i] = tmp_row2.data[i];
 
 			}
@@ -1456,7 +1670,7 @@ BOOL CALLBACK QuaternionDlgProc(HWND _hwnd,
 			objQC->Conjugate_A();
 			setQresult(_hwnd);
 			break;
-		/*case IDC_BUTTON4:
+			/*case IDC_BUTTON4:
 			break;*/
 		case IDC_BUTTON5:
 			objQC->Subtraction_AB();
@@ -1537,8 +1751,8 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 	case WM_COMMAND: {
 		switch (LOWORD(_wparam))
 		{
-		//objSlerp
-		/* UPDATE VALUES (THERE MUST BE A BETTER WAY TO DO THIS)*/
+			//objSlerp
+			/* UPDATE VALUES (THERE MUST BE A BETTER WAY TO DO THIS)*/
 
 		case IDC_EDIT1:
 		{
@@ -1626,7 +1840,7 @@ BOOL CALLBACK SLERPDlgProc(HWND _hwnd,
 		case IDC_BUTTON2:
 		{
 			CMatrix m = objSlerp->MATRIX(_hwnd, as1, bs1, cs1, ds1);
-			
+
 			reassmbleslerp(m.data);
 
 			updatevaluesMatrix(_hwnd, 2);

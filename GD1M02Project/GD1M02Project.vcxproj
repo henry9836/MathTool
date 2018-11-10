@@ -144,6 +144,7 @@
     <ClInclude Include="QuaternionCalculator.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="slerp.h" />
+    <ClInclude Include="TransformationCalculator.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="QuaternionCalculator.cpp" />
     <ClCompile Include="slerp.cpp" />
+    <ClCompile Include="TransformationCalculator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
