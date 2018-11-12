@@ -20,6 +20,7 @@
 #include <windowsx.h>  // Include useful macros.
 #include <sstream>
 #include <iostream>
+#include <string>
 #include "utils.h"
 #include "resource.h"
 #include "QuaternionCalculator.h"
@@ -27,6 +28,8 @@
 #include "slerp.h"
 #include "GaussianCalculator.h"
 #include "TransformationCalculator.h"
+
+using namespace std;
 
 float tmp[16];
 float tmp2[16];
@@ -65,6 +68,8 @@ float GuassMatrix[3][4] = {
 { 0, 0, 0, 0 },
 };
 
+string order[4] = {};
+
 Matrix TransResultantMatrixA;
 Matrix TransResultantMatrixB;
 Matrix TransResultantMatrixTA;
@@ -87,11 +92,11 @@ float as1 = 0, bs1 = 0, cs1 = 0, ds1 = 0, as2 = 0, bs2 = 0, cs2 = 0, ds2 = 0, ts
 
 /* GUASSIAN */
 
-int i1, i3, i4, i6, i7 = 0;
-float i2, i5 = 0;
+int i1=0, i3=0, i4=0, i6=0, i7 = 0;
+float i2=0, i5 = 0;
 
 /* TRANSFORMATION */
-float sx, sy, sz, tx, ty, tz, rotx, roty, rotz, angle, prox, proy, proz, distance = 0;
+float sx=0, sy=0, sz=0, tx=0, ty=0, tz=0, rotx=0, roty=0, rotz=0, angle=0, prox=0, proy=0, proz=0, distancee = 0;
 bool scale = false;
 bool trans_m = false;
 bool rot = false;
@@ -1173,91 +1178,47 @@ case WM_COMMAND: {
 			break;
 		}
 		case IDC_EDIT15: {
-			distance = ReadFromEditBox(_hwnd, IDC_EDIT15);
+			distancee = ReadFromEditBox(_hwnd, IDC_EDIT15);
 			break;
 		}
-		case IDC_CHECK1: {
+		case IDC_BUTTON6: {
 			scale = !scale;
+			TransResultantMatrixTB = TransResultantMatrixTA = trans->Scale_RowColumn(sx, sy, sz, TransResultantMatrixA);
+			TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTA, TransResultantMatrixA);
+			TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTB, TransResultantMatrixB);
+			updatevaluesMatrix(_hwnd, 4);
 			break;
 		}
-		case IDC_CHECK2: {
+		case IDC_BUTTON16: {
 			trans_m = !trans_m;
+			TransResultantMatrixTA = trans->Translate_Row(tx, ty, tz, TransResultantMatrixA);
+			TransResultantMatrixTB = trans->Translate_Column(tx, ty, tz, TransResultantMatrixB);
+			TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTA, TransResultantMatrixA);
+			TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTB, TransResultantMatrixB);
+			updatevaluesMatrix(_hwnd, 4);
 			break;
 		}
-		case IDC_CHECK3: {
+		case IDC_BUTTON17: {
 			rot = !rot;
+			TransResultantMatrixTA = trans->Rot_Row(rotx, roty, rotz, angle, TransResultantMatrixA);
+			TransResultantMatrixTB = trans->Rot_Column(rotx, roty, rotz, angle, TransResultantMatrixB);
+			TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTA, TransResultantMatrixA);
+			TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTB, TransResultantMatrixB);
+			updatevaluesMatrix(_hwnd, 4);
 			break;
 		}
-		case IDC_CHECK4: {
+		case IDC_BUTTON18: {
 			pro = !pro;
+			TransResultantMatrixTA = trans->Proj_Row(prox, proy, proz, distancee, TransResultantMatrixA);
+			TransResultantMatrixTB = trans->Proj_Column(prox, proy, proz, distancee, TransResultantMatrixB);
+			TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTA, TransResultantMatrixA);
+			TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTB, TransResultantMatrixB);
+			updatevaluesMatrix(_hwnd, 4);
 			break;
 		}
 		case IDC_BUTTON4: {
 
-			if (scale) {
-				TransResultantMatrixB = TransResultantMatrixA = trans->Scale_RowColumn(sx, sy, sz, TransResultantMatrixA);
-				TransResultantMatrixTA = TransResultantMatrixTB = TransResultantMatrixA;
-			}
-			if (trans_m) {
-				TransResultantMatrixA = trans->Translate_Row(tx, ty, tz, TransResultantMatrixA);
-				TransResultantMatrixB = trans->Translate_Column(tx, ty, tz, TransResultantMatrixB);
-				TransResultantMatrixTC = TransResultantMatrixA;
-				TransResultantMatrixTD = TransResultantMatrixB;
-			}
-			if (rot) {
-				TransResultantMatrixA = trans->Rot_Row(rotx, roty, rotz, angle, TransResultantMatrixA);
-				TransResultantMatrixB = trans->Rot_Column(rotx, roty, rotz, angle, TransResultantMatrixB);
-				TransResultantMatrixTE = TransResultantMatrixA;
-				TransResultantMatrixTF = TransResultantMatrixB;
-			}
-			if (pro) {
-				TransResultantMatrixA = trans->Proj_Row(prox, proy, proz, distance, TransResultantMatrixA);
-				TransResultantMatrixB = trans->Proj_Column(prox, proy, proz, distance, TransResultantMatrixB);
-				TransResultantMatrixTG = TransResultantMatrixA;
-				TransResultantMatrixTH = TransResultantMatrixB;
-			}
-
-			if (scale || trans_m || rot || pro) {
-				if (scale) {
-					TransResultantMatrixA = TransResultantMatrixB = TransResultantMatrixTA;
-					if (trans_m) {
-						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTC, TransResultantMatrixA);
-						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTD, TransResultantMatrixB);
-					}
-					if (rot) {
-						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTE, TransResultantMatrixA);
-						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTF, TransResultantMatrixB);
-					}
-					if (pro) {
-						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTG, TransResultantMatrixA);
-						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTH, TransResultantMatrixB);
-					}
-				}
-				else if (trans_m) {
-					TransResultantMatrixA = TransResultantMatrixTC;
-					TransResultantMatrixB = TransResultantMatrixTD;
-					if (rot) {
-						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTE, TransResultantMatrixA);
-						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTF, TransResultantMatrixB);
-					}
-					if (pro) {
-						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTG, TransResultantMatrixA);
-						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTH, TransResultantMatrixB);
-					}
-				}
-				else if (rot) {
-					TransResultantMatrixA = TransResultantMatrixTE;
-					TransResultantMatrixB = TransResultantMatrixTF;
-					if (pro) {
-						TransResultantMatrixA = trans->Multiply_m(TransResultantMatrixA, TransResultantMatrixTG, TransResultantMatrixA);
-						TransResultantMatrixB = trans->Multiply_m(TransResultantMatrixB, TransResultantMatrixTH, TransResultantMatrixB);
-					}
-				}
-			}
-
-			if (!scale && !trans_m && !rot && !pro) {
-				MessageBox(_hwnd, L"Please Select at least one mode", L"Error", MB_ICONWARNING);
-			}
+			TransResultantMatrixA = TransResultantMatrixB = trans->Idtity(TransResultantMatrixB);
 
 			updatevaluesMatrix(_hwnd, 4);
 			break;

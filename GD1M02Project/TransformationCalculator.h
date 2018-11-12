@@ -1,4 +1,16 @@
-
+//
+// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+//
+// (c) 2018 Media Design School
+//
+// File Name	: TransformationCalculator.h
+// Description	: TransformationCalculator header file
+// Author		: Henry Oliver
+// Mail			: henry.oliver@mediadesign.school.nz
+//
 #include <math.h>
 
 struct rowMatrix
@@ -25,6 +37,8 @@ public:
 	~TransformationCalculator();
 
 	Matrix Scale_RowColumn(float scalex, float scaley, float scalez, Matrix mat);
+
+	Matrix Idtity(Matrix mat);
 
 	Matrix Translate_Row(float scalex, float scaley, float scalez, Matrix mat);
 

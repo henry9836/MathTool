@@ -1,3 +1,17 @@
+//
+// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+//
+// (c) 2018 Media Design School
+//
+// File Name	: TransformationCalculator.cpp
+// Description	: TransformationCalculator calculations
+// Author		: Henry Oliver
+// Mail			: henry.oliver@mediadesign.school.nz
+//
+
 #include "TransformationCalculator.h"
 
 TransformationCalculator::TransformationCalculator()
@@ -19,6 +33,21 @@ Matrix TransformationCalculator::Scale_RowColumn(float scalex, float scaley, flo
 
 	return mat;
 
+}
+
+Matrix TransformationCalculator::Idtity(Matrix mat) {
+
+	for (size_t i = 0; i < 15; i++)
+	{
+		mat.data[i] = 0;
+	}
+
+	mat.data[0] = 1;
+	mat.data[5] = 1;
+	mat.data[10] = 1;
+	mat.data[15] = 1;
+
+	return mat;
 }
 
 Matrix TransformationCalculator::Translate_Row(float scalex, float scaley, float scalez, Matrix mat) {

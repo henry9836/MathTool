@@ -1,3 +1,17 @@
+//
+// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+//
+// (c) 2018 Media Design School
+//
+// File Name	: GaussianCalculator.h
+// Description	: GaussianCalculator header file
+// Author		: Henry Oliver
+// Mail			: henry.oliver@mediadesign.school.nz
+//
+
 #pragma once
 #ifndef _GAUSSIANCALCULATOR_H
 #define _GAUSSIANCALCULATOR_H

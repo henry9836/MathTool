@@ -73,9 +73,12 @@
 #define IDC_EDIT33                      1033
 #define IDC_EDIT_AScaled                1033
 #define IDC_CHECK1                      1033
+#define IDC_BUTTON16                    1033
 #define IDC_EDIT34                      1034
 #define IDC_EDIT32                      1034
+#define IDC_BUTTON17                    1034
 #define IDC_EDIT35                      1035
+#define IDC_BUTTON18                    1035
 #define IDC_EDIT36                      1036
 #define IDC_CHECK2                      1036
 #define IDC_EDIT37                      1037
